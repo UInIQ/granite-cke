@@ -1,0 +1,32 @@
+buildscript {
+    apply from: "$rootProject.projectDir/gradle/buildscript.gradle", to: buildscript
+}
+
+description = "CKEditor Granite Widget"
+group = 'com.ckeditor.aem'
+version = '1.0.1-SNAPSHOT'
+defaultTasks 'clean', 'build', 'aemDeploy'
+
+apply plugin: 'com.cognifide.aem'
+
+repositories {
+    maven { url "https://repo.adobe.com/nexus/content/groups/public" }
+    maven { url "https://repo1.maven.org/maven2" }
+    jcenter()
+    mavenCentral()
+    mavenLocal()
+}
+
+plugins.withId 'com.cognifide.aem', {
+
+    // Common AEM configuration (CRX packages, deployment etc)
+
+    aem {
+        config {
+            contentPath = file("src/main/content")
+            instance("http://localhost:4502", "admin", "admin", "local-author")
+            // instance("http://localhost:4503", "admin", "admin", "local-publish")
+        }
+    }
+
+}
